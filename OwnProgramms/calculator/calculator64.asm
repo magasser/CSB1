@@ -29,11 +29,6 @@ global _start
 _start:	
 	
 	jmp	_printFirst
-	
-Exit:
-	mov	RAX, 60
-	mov	RDI, 0
-	syscall
 
 _printFirst:
 	mov	RAX, 1
@@ -163,3 +158,8 @@ _printResult:
 	mov	RDX, LineFeedL
 	syscall
 	jmp	Exit
+
+Exit:
+	mov	RAX, 60
+	mov	RDI, 0
+	syscall
