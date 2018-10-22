@@ -28,7 +28,7 @@ global _start
 
 _start:	
 	
-	jmp	_printFirst
+	jmp	_printFirst		; Start of the program
 
 _printFirst:
 	mov	RAX, 1
@@ -60,41 +60,12 @@ _getFirst:
 	mov	RSI, first
 	mov	RDX, 16
 	syscall
-
-
-	mov 	RCX, 1
-	mov	RBX, 0
-	mov	RDX, 0
-Repeat:
-	mov	RAX, [first]
-	and	RAX, 00FFh
-	sub	RAX, 030h
-	mov	RAX, [first]
-	push	RBX
-	mov	RBX, 0100h
-	div	RBX
-	pop	RBX
-	mov	[first], RAX
-	push	RBX
-	mov	RBX, RCX
-Loop:
-	push	RBX
-	mov	RBX, 010h
-	mul	RBX
-	pop	RBX
-	dec	RBX
-	cmp	RBX, 0
-	je	Loop
+	call	_convertStrToNr
 	
-	mov	RBX, 010h
-	div	RBX
-	pop	RBX
-	add	RBX, RAX
-	cmp	RCX, 16
-	inc	RCX
-	je	Repeat
-	push	RBX
-	jmp 	_printSecond
+_convertStrToNr:
+	mov	RAX, [first]
+	lea	RBX, [first]
+	ret
 
 _getSecond:
 	mov	RAX, 0
