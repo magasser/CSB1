@@ -60,11 +60,22 @@ _getFirst:
 	mov	RSI, first
 	mov	RDX, 16
 	syscall
+	mov	RBX, first
 	call	_convertStrToNr
-	
+	jmp	_printSecond	
+
 _convertStrToNr:
-	mov	RAX, [first]
-	lea	RBX, [first]
+	mov	RAX, 16
+	sub	byte [RBX], 30h
+	inc	RBX
+	dec	RAX
+	mov	R15, [RBX]
+	and	R15, 00FFh
+	cmp	R15, 0Ah
+	je 	Return1
+	jnz	_convertStrToNr 	
+Return1:
+	sub	byte [RBX], 0Ah
 	ret
 
 _getSecond:
@@ -73,11 +84,8 @@ _getSecond:
 	mov	RSI, second
 	mov	RDX, 16
 	syscall
-
-	mov	RAX, [second]
-	and	RAX, 00FFh
-	sub	RAX, 030h
-	push	RAX
+	mov	RBX, second
+	call	_convertStrToNr
 	jmp	_printOperand
 
 _getOperand:
@@ -91,26 +99,40 @@ _getOperand:
 _calculateResult:
 	mov	RAX, [operand]
 	mov	RBX, 0A2Bh
-	CMP	RAX, RBX
-	JE 	Add
-	CMP 	RAX, 0A2Dh
-	JE 	Sub
+	cmp	RAX, RBX
+	je	Add
+	cmp 	RAX, 0A2Dh
+	je 	Sub
 
 Add:
-	pop	RBX
-	pop	RAX, 
+	mov	RAX, [first]
+	mov	RBX, [second] 
 	add	RAX, RBX
+	mov	[result], RAX
 	jmp	_printResult
 Sub:
-	pop	RBX
-	pop	RAX
+	mov	RAX, [first]
+	mov	RBX, [second]
 	sub	RAX, RBX
+	mov	[result], RAX
 	jmp	_printResult
 	
+_convertNrToStr:
+	mov	RAX, 16
+	add	byte [RBX], 30h
+	inc	RBX
+	dec	RAX
+	mov	R15, [RBX]
+	and	R15, 00FFh
+	cmp	R15, 00h
+	je	Return2
+	jnz	_convertNrToStr
+Return2:
+	ret
+
 _printResult:
-	mov	RBX, RAX
-	add	RBX, 030h
-	mov	[result], RBX
+	mov	RBX, result
+	call	_convertNrToStr
 	mov	RAX, 1
 	mov	RDI, 1
 	mov	RSI, Result

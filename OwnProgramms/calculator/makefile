@@ -1,8 +1,8 @@
 all: calculator64
 	
 clean:
-	rm  calculator64.o
-	rm  calculactor64
+	rm -r  calculator64.o
+	rm -rf calculator64
 calculator64: calculator64.o
 	ld -o calculator64 calculator64.o
 calculator64.o:
