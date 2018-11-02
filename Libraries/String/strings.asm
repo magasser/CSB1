@@ -44,11 +44,10 @@ StringToNumber:
 	mov	RDX, [RAX]		; Copy the value of the memory in RBX
 	xor	RAX, RAX		; Reset RAX register
 
-; Reverse the number from the memory
+; Revere the number to get the correct number
 .loop2:
 	mov	RBX, 10			; Multiply the value in RAX by 10
 	mul	RBX
-	shr	RDX, 4			; Shift the number in RDX right by 4 bits
 	mov	AL, DL			; Copy the lower 4 bits of the DX register in AL
 	dec 	RCX			; Decrement the counter
 	jnz	.loop2			; Repeat if end of number is not reached
