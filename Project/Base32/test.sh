@@ -57,4 +57,9 @@ fi
 
 # Output grade
 echo "Final grade: $total/10"
+
+#Cleanup
+echo "Call cleanup"
+sh cleanup.sh
+
 exit 0
