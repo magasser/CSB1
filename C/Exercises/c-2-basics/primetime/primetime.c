@@ -8,12 +8,17 @@ int main(){
     if(1 != scanf("%d", &n))
         return 1;
     
-    for(unsigned int i = 2; done < n; i++){
+    if(n > 0){
+        printf("%i\n", 2);
+    }
+
+    for(unsigned int i = 3; done < n; i += 2){
         bool i_is_prime = true;
 
-        for(unsigned int k = 2; k < i/2; k++){
+        for(unsigned int k = 3; k*k <= i; k += 2){
             if(i%k == 0){
                 i_is_prime = false;
+                break;
             }
         }
 

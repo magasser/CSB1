@@ -3,6 +3,7 @@
 int main(){
 
     signed int number;
+do{
     printf("Type a number: ");
     scanf("%d", &number);
 
@@ -21,19 +22,20 @@ int main(){
         factors[factor++] = 2;
     }
 
-    for(unsigned int i = 3; i < ref/2; i += 2){
+    for(unsigned int i = 3; i <= ref; i += 2){
         if(number % i == 0){
             factors[factor++] = i;
+            number /= i;
             i -= 2;
-            number /= 2;
         }
     }
     
-    int l = sizeof(factors)/sizeof(factors[0]);
+    int l = sizeof(factors);
 
     for(unsigned int i = 0; i < factor; i++){
         printf("%d\n", factors[i]);
     }
+}while(number != 0);
 
     return 0;
 }
