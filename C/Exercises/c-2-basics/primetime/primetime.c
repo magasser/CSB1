@@ -10,7 +10,9 @@ int main(){
     
     if(n > 0){
         printf("%i\n", 2);
+        done++;
     }
+    
 
     for(unsigned int i = 3; done < n; i += 2){
         bool i_is_prime = true;
