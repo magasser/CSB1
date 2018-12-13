@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define new_struct(t) (t*) malloc(sizeof(t))
 
@@ -7,22 +8,29 @@ struct Car {
     char type[50];
     long id;
     double price;
+    struct Car *next;
 };
 
 int main(){
     puts("Enter new cars:");
 
-    struct Car car[10];
-    int res;
-    int i = 0;
-    do{
-        res = scanf("%s %s %ld %lf", car[i].brand, car[i].type, &car[i].id, &car[i].price);
-        i++;
-    }while(res != EOF);
-    i--;
+    struct Car *first = NULL;
 
-    for(int j = 0; j < i; j++){
-        printf("\nbrand: %s, type: %s, id: %ld, price: %lf\n", car[j].brand, car[j].type, car[j].id, car[j].price);
+    int res;
+
+    do{
+        struct Car *newFirst = (struct Car*) malloc(sizeof(struct Car));
+
+        res = scanf("%s %s %ld %lf", newFirst->brand, newFirst->type, &newFirst->id, &newFirst->price);
+        if(res == EOF) break;
+
+        newFirst->next = first;
+        first = newFirst;
+    }while(1);
+
+    while(first != NULL){
+        printf("\nbrand: %s, type: %s, id: %ld, price: %lf\n", first->brand, first->type, first->id, first->price);
+        first = first->next;
     }
 
     return 0;
