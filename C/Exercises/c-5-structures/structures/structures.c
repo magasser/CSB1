@@ -18,19 +18,27 @@ int main(){
 
     int res;
 
-    do{
-        struct Car *newFirst = (struct Car*) malloc(sizeof(struct Car));
+    for(;;){
+        struct Car *newFirst = new_struct(struct Car);
 
-        res = scanf("%s %s %ld %lf", newFirst->brand, newFirst->type, &newFirst->id, &newFirst->price);
+        res = scanf("%49s %49s %ld %lf", newFirst->brand, newFirst->type, &newFirst->id, &newFirst->price);
         if(res == EOF) break;
 
         newFirst->next = first;
         first = newFirst;
-    }while(1);
+    }
+
+    struct Car *backup = first;
 
     while(first != NULL){
         printf("\nbrand: %s, type: %s, id: %ld, price: %lf\n", first->brand, first->type, first->id, first->price);
         first = first->next;
+    }
+
+    while(backup != NULL){
+        struct Car *temp = backup;
+        backup = backup->next;
+        free(temp);
     }
 
     return 0;
